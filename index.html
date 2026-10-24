@@ -351,9 +351,9 @@ document.getElementById('copyBtn').addEventListener('click', function(){
 });
 
 (function(){
-  // Intake submissions go to TO. Set ENDPOINT to a form service URL that accepts JSON posts;
-  // while it's empty, Send opens the visitor's email app with the form prefilled instead.
-  var TO='johnii@daduhstudio.com', ENDPOINT='';
+  // Intake submissions post to Formspree, which emails them to TO. If ENDPOINT is cleared,
+  // Send opens the visitor's email app with the form prefilled instead.
+  var TO='johnii@daduhstudio.com', ENDPOINT='https://formspree.io/f/xvkkzogd';
   var dlg=document.getElementById('intake'), form=document.getElementById('intakeForm'), status=document.getElementById('intakeStatus');
   if(!dlg || typeof dlg.showModal!=='function') return;
   document.querySelectorAll('[data-intake]').forEach(function(a){
