@@ -122,6 +122,35 @@ h2{font-family:var(--display);font-weight:900;font-size:clamp(30px,4.4vw,52px);l
 .email{font-family:var(--display);font-weight:700;font-size:clamp(20px,3vw,28px);user-select:all;border-bottom:3px solid var(--red);padding-bottom:2px;word-break:break-all}
 .copy{background:transparent;color:var(--ink);border:2px solid var(--ink)}
 .copy:hover{border-color:var(--red)}
+
+/* intake dialog */
+.intake{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:2px solid var(--ink);border-radius:8px;background:var(--bg);color:var(--ink);overflow:auto}
+.intake::backdrop{background:rgba(18,18,18,.55)}
+.intake-in{padding:32px 28px 28px;position:relative}
+.intake h2{font-size:clamp(28px,5vw,38px);margin:0 0 8px;padding-right:40px}
+.intake .sub{font-size:16px;margin-bottom:24px}
+.intake .x{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:999px;border:2px solid var(--line);background:transparent;color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.intake .x:hover{border-color:var(--red)}
+.field{display:grid;gap:6px;margin:0 0 16px;border:0;padding:0;min-width:0}
+.field label,.field legend{font-family:var(--display);font-weight:700;font-size:14px;padding:0}
+.field .opt{font-family:var(--body);font-weight:400;color:var(--muted)}
+.field input,.field textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:6px;padding:11px 12px;width:100%}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--ink)}
+.field textarea{min-height:104px;resize:vertical}
+.tiers{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tiers label{font-family:var(--body);font-weight:500;font-size:15px;cursor:pointer;position:relative}
+.tiers input{position:absolute;opacity:0;width:1px;height:1px}
+.tiers span{display:inline-block;padding:8px 14px;border:2px solid var(--line);border-radius:999px}
+.tiers input:checked + span{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tiers input:focus-visible + span{outline:3px solid var(--red);outline-offset:2px}
+.hp{position:absolute;left:-9999px}
+.intake .actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:8px}
+.intake .status{font-size:15px;color:var(--muted);margin:0}
+.intake .status.err{color:var(--red)}
+.intake .done{display:none}
+.intake.sent form{display:none}
+.intake.sent .done{display:block}
+.intake .btn[disabled]{opacity:.6;cursor:wait;transform:none}
 footer{padding-block:28px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
 footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:500}
@@ -148,7 +177,7 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="data duh. home">da<span class="ta">ta</span><span class="duh" aria-hidden="true">duh.</span></a>
-    <a class="btn" href="#contact">Start a project</a>
+    <a class="btn" href="#contact" data-intake>Start a project</a>
   </div>
 </header>
 
@@ -279,6 +308,40 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
   </div>
 </footer>
 
+<dialog class="intake" id="intake" aria-labelledby="intakeTitle">
+  <div class="intake-in">
+    <button class="x" type="button" data-close aria-label="Close">&times;</button>
+    <form id="intakeForm" novalidate>
+      <h2 id="intakeTitle">Start a project</h2>
+      <p class="sub">Tell us a little about your brand. We'll reply with a scope and a price within two business days.</p>
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+      <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization" required></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <fieldset class="field">
+        <legend>Annual revenue</legend>
+        <div class="tiers">
+          <label><input type="radio" name="revenue" value="Under $1M" required><span>Under $1M</span></label>
+          <label><input type="radio" name="revenue" value="$1M to $5M"><span>$1M to $5M</span></label>
+          <label><input type="radio" name="revenue" value="$5M to $20M"><span>$5M to $20M</span></label>
+          <label><input type="radio" name="revenue" value="$20M to $50M"><span>$20M to $50M</span></label>
+          <label><input type="radio" name="revenue" value="$50M+"><span>$50M+</span></label>
+        </div>
+      </fieldset>
+      <div class="field"><label for="f-context">Additional context <span class="opt">(optional)</span></label><textarea id="f-context" name="context" placeholder="What decisions are you trying to make? Where does your data live today?"></textarea></div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="actions">
+        <button class="btn red" type="submit">Send</button>
+        <p class="status" id="intakeStatus" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+    <div class="done">
+      <h2>Got it. <span class="hand">Talk soon.</span></h2>
+      <p class="sub">Thanks for reaching out. We'll be in touch within two business days.</p>
+      <button class="btn" type="button" data-close>Close</button>
+    </div>
+  </div>
+</dialog>
+
 <script>
 document.getElementById('copyBtn').addEventListener('click', function(){
   var btn=this, text=document.getElementById('email').textContent;
@@ -286,6 +349,46 @@ document.getElementById('copyBtn').addEventListener('click', function(){
   function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected';setTimeout(function(){btn.textContent='Copy email'},1800)}
   try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
 });
+
+(function(){
+  // Intake submissions post to Formspree, which emails them to TO. If ENDPOINT is cleared,
+  // Send opens the visitor's email app with the form prefilled instead.
+  var TO='johnii@daduhstudio.com', ENDPOINT='https://formspree.io/f/xvkkzogd';
+  var dlg=document.getElementById('intake'), form=document.getElementById('intakeForm'), status=document.getElementById('intakeStatus');
+  if(!dlg || typeof dlg.showModal!=='function') return;
+  document.querySelectorAll('[data-intake]').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();dlg.classList.remove('sent');status.textContent='';dlg.showModal();form.querySelector('input').focus()});
+  });
+  dlg.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){dlg.close()})});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+  function sent(){form.reset();status.textContent='';dlg.classList.add('sent')}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    status.className='status';
+    if(!form.checkValidity()){
+      var bad=form.querySelector('input:invalid');
+      status.className='status err';
+      status.textContent=bad.type==='radio'?'Pick a revenue range.':(bad.type==='email'&&bad.value)?'Check your email address.':'Fill in the required fields.';
+      bad.focus();return;
+    }
+    var d=Object.fromEntries(new FormData(form));
+    if(d._honey) return sent();
+    delete d._honey;
+    var subject='New project inquiry: '+d.company;
+    if(!ENDPOINT){
+      var body='Name: '+d.name+'\nCompany: '+d.company+'\nEmail: '+d.email+'\nAnnual revenue: '+d.revenue+'\n\n'+(d.context||'');
+      location.href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      return sent();
+    }
+    var btn=form.querySelector('[type=submit]');
+    d._subject=subject;
+    btn.disabled=true;status.textContent='Sending…';
+    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){if(!r.ok)throw new Error(r.status);sent()})
+      .catch(function(){status.className='status err';status.textContent='Something went wrong. Email us at '+TO+' instead.'})
+      .finally(function(){btn.disabled=false});
+  });
+})();
 </script>
 </body>
 </html>
