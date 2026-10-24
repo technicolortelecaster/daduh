@@ -120,8 +120,6 @@ h2{font-family:var(--display);font-weight:900;font-size:clamp(30px,4.4vw,52px);l
 .close h2{max-width:16ch;font-size:clamp(36px,6vw,72px)}
 .contact{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:32px}
 .email{font-family:var(--display);font-weight:700;font-size:clamp(20px,3vw,28px);user-select:all;border-bottom:3px solid var(--red);padding-bottom:2px;word-break:break-all}
-.copy{background:transparent;color:var(--ink);border:2px solid var(--ink)}
-.copy:hover{border-color:var(--red)}
 
 /* intake dialog */
 .intake{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:2px solid var(--ink);border-radius:8px;background:var(--bg);color:var(--ink);overflow:auto}
@@ -177,7 +175,7 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="data duh. home">da<span class="ta">ta</span><span class="duh" aria-hidden="true">duh.</span></a>
-    <a class="btn" href="#contact" data-intake>Start a project</a>
+    <a class="btn red" href="#contact" data-intake>Start a project</a>
   </div>
 </header>
 
@@ -295,7 +293,7 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
       <p class="sub">Send us your store URL and what you wish you could see. We'll reply with a scope and a price within two business days.</p>
       <div class="contact">
         <a class="email" id="email" href="mailto:hello@dataduh.co">hello@dataduh.co</a>
-        <button class="btn copy" id="copyBtn" type="button">Copy email</button>
+        <a class="btn red" href="#contact" data-intake>Start a project</a>
       </div>
     </div>
   </section>
@@ -343,13 +341,6 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
 </dialog>
 
 <script>
-document.getElementById('copyBtn').addEventListener('click', function(){
-  var btn=this, text=document.getElementById('email').textContent;
-  function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy email'},1800)}
-  function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected';setTimeout(function(){btn.textContent='Copy email'},1800)}
-  try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
-});
-
 (function(){
   // Intake submissions post to Formspree, which emails them to TO. If ENDPOINT is cleared,
   // Send opens the visitor's email app with the form prefilled instead.
