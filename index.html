@@ -68,7 +68,8 @@ h1 .hand{font-size:1.02em}
 .track{display:flex;gap:16px;width:max-content;animation:scroll 40s linear infinite}
 .marquee:hover .track{animation-play-state:paused}
 .logo-tile{flex:none;width:180px;height:72px;display:flex;align-items:center;justify-content:center;border:2px dashed var(--ghost);border-radius:6px;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ghost);letter-spacing:-.01em}
-.logo-tile img{max-width:140px;max-height:44px;filter:grayscale(1);opacity:.75}
+.logo-tile:has(img){border-color:transparent}
+.logo-tile img{display:block;width:auto;height:auto;max-width:140px;max-height:44px;object-fit:contain;filter:grayscale(1);opacity:.75}
 @keyframes scroll{to{transform:translateX(calc(-50% - 8px))}}
 @media (prefers-reduced-motion:reduce){.track{animation:none;flex-wrap:wrap;width:auto}.track [aria-hidden="true"]{display:none}}
 
@@ -195,8 +196,8 @@ footer .tagline{font-size:12px;letter-spacing:.26em;text-transform:uppercase;fon
       <p class="label">Brands we've worked with</p>
       <div class="marquee" aria-label="Client brands">
         <div class="track">
-          <div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div><div class="logo-tile">Client logo</div>
-          <div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div><div class="logo-tile" aria-hidden="true">Client logo</div>
+          <div class="logo-tile"><img src="logos/lineage-provisions.png" alt="Lineage Provisions" loading="lazy"></div><div class="logo-tile"><img src="logos/ruggable.png" alt="Ruggable" loading="lazy"></div><div class="logo-tile"><img src="logos/santo-studio.png" alt="Santo Studio" loading="lazy"></div><div class="logo-tile"><img src="logos/liquid-plus.svg" alt="Liquid+" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/lineage-provisions.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/ruggable.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/santo-studio.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/liquid-plus.svg" alt="" loading="lazy"></div>
+          <div class="logo-tile" aria-hidden="true"><img src="logos/lineage-provisions.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/ruggable.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/santo-studio.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/liquid-plus.svg" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/lineage-provisions.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/ruggable.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/santo-studio.png" alt="" loading="lazy"></div><div class="logo-tile" aria-hidden="true"><img src="logos/liquid-plus.svg" alt="" loading="lazy"></div>
         </div>
       </div>
     </div>
